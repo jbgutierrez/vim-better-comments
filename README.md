@@ -1,7 +1,7 @@
 # vim-better-comments
 
 BetterComments extension will help you create more human-friendly comments in your code.
-I've borrow the core idea from the Visual [Visual Studio plugin](https://github.com/aaron-bond/better-comments) with the same name.
+I've borrowed the core idea from the Visual [Visual Studio plugin](https://github.com/aaron-bond/better-comments) with the same name.
 
 ![](images/screenshoot.gif)
 
