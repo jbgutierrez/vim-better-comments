@@ -3,6 +3,8 @@
 BetterComments extension will help you create more human-friendly comments in your code.
 I've borrow the core idea from the Visual [Visual Studio plugin](https://github.com/aaron-bond/better-comments) with the same name.
 
+![](images/screenshoot.gif)
+
 ## Configuration
 
 You can tweak the behavior of Partial by setting a few variables in your `vimrc` file.
