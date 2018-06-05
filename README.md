@@ -11,7 +11,7 @@ You can tweak the behavior of BetterComments by setting a few variables in your 
 
 ### Colors
 
-Change colors to your preferences by tweaking the provided hightlight groups:
+Change colors to your preferences by tweaking the provided highlight groups:
 
 ```vim
 ErrorBetterComments
@@ -23,7 +23,13 @@ TodoBetterComments
 
 ### Target languages
 
-By default, the comments in all languages are handled. You can change that behaviour by providing either a `g:bettercomments_skipped` list or a `g:bettercomments_included` list.
+Syntax files authors usually prepend highlight groups with the name of the target language. BetterComments tries to expand those comment highlight groups definitions to detect meaningful matches. In some cases like, for example [pangloss/vim-javascript](https://github.com/pangloss/vim-javascript), that naming convention is not followed. In such cases, you can overcome the mismatch providing a dictionary of aliases:
+
+```vim
+let g:bettercomments_language_aliases = { 'javascript': 'js' }
+```
+
+By default, all languages are targeted. You can change that behaviour by providing either a `g:bettercomments_skipped` list or a `g:bettercomments_included` list.
 
 ## Bugs
 

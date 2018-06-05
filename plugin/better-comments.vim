@@ -12,25 +12,27 @@ let g:loaded_bettercomments = 1
 " Functions {{{
 
 function! s:AddMatchesGroup(name, rules)
-  let containedin=join(map(['MultilineComment', 'LineComment', 'DocComment', 'Comment'], 'b:bettercomments_language."".v:val'), ",").',Comment'
+  let containedin=join(map(['MultilineComment', 'LineComment', 'DocComment', 'Comment'], 'b:bettercomments_syntax_prefix."".v:val'), ",").',Comment'
   exe 'syn match '.a:name.'BetterComments "\(^\s*\)\@<=\([^0-9A-Za-z_ ]\+ *\)\? \?\('.join(a:rules, '\|').'\)...\+" containedin='.containedin
-  exe 'syn match '.a:name.'LineBetterComments "\(\/\{2\}\|#\{1\}\|\"\{1\}\) *\('.join(a:rules, '\|').'\)...\+" containedin='.b:bettercomments_language.'LineComment'
+  exe 'syn match '.a:name.'LineBetterComments "\(\/\{2\}\|#\{1\}\|\"\{1\}\) *\('.join(a:rules, '\|').'\)...\+" containedin='.b:bettercomments_syntax_prefix.'LineComment'
 endfunction
 
 function! s:BetterComments()
-  let b:bettercomments_language = substitute(&filetype, '\..*', '', '')
+  let language = substitute(&filetype, '\..*', '', '')
   if exists("g:bettercomments_skipped") |
-    if index(g:bettercomments_skipped, b:bettercomments_language) > -1 | return | endif
+    if index(g:bettercomments_skipped, language) > -1 | return | endif
   endif
   if exists("g:bettercomments_included") |
-    if index(g:bettercomments_included, b:bettercomments_language) == -1 | return | endif
+    if index(g:bettercomments_included, language) == -1 | return | endif
   endif
+
+  let b:bettercomments_syntax_prefix = exists('g:bettercomments_language_aliases[language]') ? g:bettercomments_language_aliases[language] : language
 
   call s:AddMatchesGroup("Highlight", [ '+', 'WARN:' ])
   call s:AddMatchesGroup("Error", [ '!', 'ERROR:', 'DEPRECATED:' ])
   call s:AddMatchesGroup("Question", [ '?', 'QUESTION:' ])
   call s:AddMatchesGroup("Todo", [ 'TODO:', 'FIXME:' ])
-  let containedin=join(map(['LineComment', 'MultilineComment', 'DocComment', 'Comment'], 'b:bettercomments_language."".v:val'), ",").',Comment'
+  let containedin=join(map(['LineComment', 'MultilineComment', 'DocComment', 'Comment'], 'b:bettercomments_syntax_prefix."".v:val'), ",").',Comment'
   exe 'syn match StrikeoutBetterComments "\(\/\{4\}\|#\{2\}\|\"\{2\}\).\+" containedin='.containedin
 endfunction
 
