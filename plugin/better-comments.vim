@@ -9,6 +9,9 @@ if ( exists('g:loaded_bettercomments') && g:loaded_bettercomments ) || v:version
 endif
 let g:loaded_bettercomments = 1
 
+" Language aliases for bettercomments
+let g:bettercomments_language_aliases = { 'javascript': 'js', 'vim': 'vim' }
+
 " Functions {{{
 
 function! s:AddMatchesGroup(name, rules)
@@ -34,6 +37,9 @@ function! s:BetterComments()
   call s:AddMatchesGroup("Todo", [ 'TODO:', 'FIXME:' ])
   let containedin=join(map(['LineComment', 'MultilineComment', 'DocComment', 'Comment'], 'b:bettercomments_syntax_prefix."".v:val'), ",").',Comment'
   exe 'syn match StrikeoutBetterComments "\(\/\{4\}\|#\{2\}\|\"\{2\}\).\+" containedin='.containedin
+
+  " Additional group for Vim comments
+  call s:AddMatchesGroup("VimScriptComment", [ ' " ' ])
 endfunction
 
 "}}}
@@ -58,6 +64,7 @@ hi def link QuestionLineBetterComments QuestionBetterComments
 hi def link StrikeoutBetterComments WarningMsg
 hi def link TodoBetterComments Type
 hi def link TodoLineBetterComments TodoBetterComments
+hi def link VimScriptCommentBetterComments Comment
 
 "}}}
 
